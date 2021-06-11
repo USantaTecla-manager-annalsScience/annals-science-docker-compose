@@ -1,0 +1,31 @@
+version: '3.8'
+services:
+  annals-science-front:
+    container_name: annals-science-front
+    image: tronxi/annals-science-front:latest
+    ports:
+        - "80:80"
+    networks: 
+        - annals-science
+
+  annals-science:
+    container_name: annals-science
+    image: tronxi/annals-science:latest
+    ports:
+        - "8080:8080"
+    env_file: .env
+    networks: 
+        - annals-science
+
+  mysql:
+    container_name: mysql
+    image: mysql
+    env_file: .env
+    ports:
+      - "3306:3306"
+    volumes: 
+      - ./mysql:/var/lib/mysql
+    networks: 
+      - annals-science
+networks: 
+    annals-science:
